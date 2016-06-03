@@ -34,9 +34,9 @@ class MigrationRunner {
 	protected static Logger LOG = LoggerFactory.getLogger(this)
 
 	static void autoRun(migrationCallbacks = null) {
-		def dataSourceConfigs = grails.plugin.databasemigration.MigrationUtils.getDataSourceConfigs()
-		dataSourceConfigs.dataSource = MigrationUtils.application.config.dataSource
-		
+		def dataSourceConfigs = [dataSource: MigrationUtils.application.config.dataSource]
+		dataSourceConfigs << grails.plugin.databasemigration.MigrationUtils.getDataSourceConfigs()
+	
 		for (configAndName in dataSourceConfigs) {
 			String dsConfigName = configAndName.key
 			ConfigObject configObject = configAndName.value
